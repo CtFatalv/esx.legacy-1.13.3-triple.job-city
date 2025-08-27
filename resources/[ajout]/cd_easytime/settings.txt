@@ -1,0 +1,1 @@
+{"tsunami":false,"dynamic":false,"weather":"OVERCAST","blackout":false,"mins":0,"instanttime":true,"freeze":true,"hours":12,"instantweather":true}
