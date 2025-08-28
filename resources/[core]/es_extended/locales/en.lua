@@ -1,45 +1,4 @@
-Locales["en"] = {
-    -- Inventory
-    ["inventory"] = "Inventaire ( Poids %s / %s )",
-    ["use"] = "Utiliser",
-    ["give"] = "Donner",
-    ["remove"] = "Jeter",
-    ["return"] = "Retour",
-    ["give_to"] = "Donner à",
-    ["amount"] = "Quantité",
-    ["giveammo"] = "Donner des munitions",
-    ["amountammo"] = "Nombre de munitions",
-    ["noammo"] = "Vous n'avez pas autant de munitions!",
-    ["gave_item"] = "Vous avez donné %sx %s à %s",
-    ["received_item"] = "Vous avez reçu %sx %s de %s",
-    ["gave_weapon"] = "Vous avez donné 1x %s à %s",
-    ["gave_weapon_ammo"] = "Vous avez donné ~o~%sx %s pour %s à %s",
-    ["gave_weapon_withammo"] = "Vous avez donné 1x %s avec ~o~%sx %s à %s",
-    ["gave_weapon_hasalready"] = "%s a déjà 1x %s",
-    ["gave_weapon_noweapon"] = "%s n'a pas cette arme",
-    ["received_weapon"] = "Vous avez reçu 1x %s de %s",
-    ["received_weapon_ammo"] = "Vous avez reçu ~o~%sx %s pour votre %s de %s",
-    ["received_weapon_withammo"] = "Vous avez reçu 1x %s avec ~o~%sx %s de %s",
-    ["received_weapon_hasalready"] = "%s a tenté de vous donner 1x %s, mais vous en aviez déjà un exemplaire",
-    ["received_weapon_noweapon"] = "%s a tenté de vous donner des munitions pour %s, mais vous n'avez pas cette arme",
-    ["gave_account_money"] = "Vous avez donné $%s (%s) à %s",
-    ["received_account_money"] = "Vous avez reçu $%s (%s) de %s",
-    ["amount_invalid"] = "Le montant est invalide",
-    ["players_nearby"] = "Aucun joueur n'est à proximité",
-    ["ex_inv_lim"] = "Action impossible, dépassement du poids maximum de %s",
-    ["imp_invalid_quantity"] = "Action impossible, la quantité est invalide",
-    ["imp_invalid_amount"] = "Action impossible, le montant est invalide",
-    ["threw_standard"] = "Vous avez jeté %sx %s",
-    ["threw_account"] = "Vous avez jeté $%s %s",
-    ["threw_weapon"] = "Vous avez jeté 1x %s",
-    ["threw_weapon_ammo"] = "Vous avez jeté 1x %s avec ~o~%sx %s",
-    ["threw_weapon_already"] = "Vous avez déjà cette arme",
-    ["threw_cannot_pickup"] = "Votre inventaire est plein, vous ne pouvez donc pas ramasser cela!",
-    ["threw_pickup_prompt"] = "Appuyez sur E pour ramasser",
-
-    -- Key mapping
-    ["keymap_showinventory"] = "Afficher l'inventaire",
-
+return {
     -- Salary related
     ["received_salary"] = "Vous avez reçu votre salaire: $%s",
     ["received_help"] = "Vous avez reçu une aide de l'état: $%s",
@@ -65,6 +24,8 @@ Locales["en"] = {
     ["command_repair_success_target"] = "Votre véhicule a été réparé par un membre du staff",
     ["command_clear"] = "Effacer le chat",
     ["command_clearall"] = "Effacer le chat de tous les joueurs",
+    ["command_refreshitems"] = "Recharger tous les objet de la base de données.",
+    ["command_refreshitems_success"] = "Rechargement réussi de %d objets.",
     ["command_clearinventory"] = "Retirer tous les objets de l'inventaire du joueur",
     ["command_clearloadout"] = "Retirer toutes les armes du joueur",
     ["command_freeze"] = "Geler un joueur sur place",
@@ -185,7 +146,7 @@ Locales["en"] = {
     ["weapon_sawnoffshotgun"] = "Fusil à canon scié",
 
     -- SMG & LMG
-    ["weapon_assaultsmg"] = "SMG d'assaut",
+    ["weapon_assaultsmg"] = "SMG s'assaut",
     ["weapon_combatmg"] = "MG de combat",
     ["weapon_combatmg_mk2"] = "MG de combat MK2",
     ["weapon_combatpdw"] = "PDW de combat",
@@ -243,11 +204,11 @@ Locales["en"] = {
     ["weapon_railgunxm3"] = "Fusil électro-magnétique",
 
     -- Chop Shop DLC
-    ["weapon_snowlauncher"] = "Lanceur de boule de neige",
-    ["weapon_hackingdevice"] = "Dispositif de piratage",
+    ["weapon_snowlauncher"] = "Snow Launcher",
+    ["weapon_hackingdevice"] = "Hacking Device",
 
     -- Bottom Dollar Bounties DLC
-    ["weapon_stunrod"] = "Baton électrique",
+    ["weapon_stunrod"] = "The Shocker",
 
     -- Thrown
     ["weapon_ball"] = "Base-ball",

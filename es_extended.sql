@@ -572,6 +572,7 @@ CREATE TABLE `society_moneywash` (
 
 CREATE TABLE `users` (
   `identifier` varchar(46) NOT NULL,
+  `ssn` varchar(11) NOT NULL,
   `accounts` longtext DEFAULT NULL,
   `group` varchar(50) DEFAULT 'user',
   `inventory` longtext DEFAULT NULL,

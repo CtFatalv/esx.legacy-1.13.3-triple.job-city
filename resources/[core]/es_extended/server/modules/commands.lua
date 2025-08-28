@@ -157,10 +157,17 @@ ESX.RegisterCommand(
             })
         end
 
+        local xRoutingBucket = GetPlayerRoutingBucket(xPlayer.source)
+
         ESX.OneSync.SpawnVehicle(args.car, playerCoords, playerHeading, upgrades, function(networkId)
             if networkId then
                 local vehicle = NetworkGetEntityFromNetworkId(networkId)
-                for _ = 1, 20 do
+
+                if xRoutingBucket ~= 0 then
+                    SetEntityRoutingBucket(vehicle, xRoutingBucket)
+                end
+
+                for _ = 1, 100 do
                     Wait(0)
                     SetPedIntoVehicle(playerPed, vehicle, -1)
 
@@ -168,6 +175,7 @@ ESX.RegisterCommand(
                         break
                     end
                 end
+
                 if GetVehiclePedIsIn(playerPed, false) ~= vehicle then
                     showError("[^1ERROR^7] The player could not be seated in the vehicle")
                 end
@@ -493,6 +501,12 @@ ESX.RegisterCommand("refreshjobs", "admin", function()
 end, true, { help = TranslateCap("command_clearall") })
 
 if not Config.CustomInventory then
+    ESX.RegisterCommand("refreshitems", "admin", function(xPlayer)
+        local itemCount = ESX.RefreshItems()
+
+        xPlayer.showNotification(Translate("command_refreshitems_success", itemCount), true, false, 140)
+    end, true, { help = TranslateCap("command_refreshitems") })
+
     ESX.RegisterCommand(
         "clearinventory",
         "admin",
@@ -612,15 +626,15 @@ ESX.RegisterCommand("job", { "user", "admin" }, function(xPlayer, _, _)
 end, false)
 
 ESX.RegisterCommand("job2", { "user", "admin" }, function(xPlayer, _, _)
-	local job = xPlayer.getJob2()
+	local job2 = xPlayer.getJob2()
 
-    print(("%s, your job2 is: ^5%s^0 - ^5%s^0 - ^5%s^0"):format(xPlayer.getName(), job.name, job.grade_label, job.onDuty and "On Duty" or "Off Duty"))
+    print(("%s, your job2 is: ^5%s^0 - ^5%s^0 - ^5%s^0"):format(xPlayer.getName(), job2.name, job2.grade_label, job2.onDuty and "On Duty" or "Off Duty"))
 end, false)
 
 ESX.RegisterCommand("job3", { "user", "admin" }, function(xPlayer, _, _)
-	local job = xPlayer.getJob3()
+	local job3 = xPlayer.getJob3()
 
-    print(("%s, your job3 is: ^5%s^0 - ^5%s^0 - ^5%s^0"):format(xPlayer.getName(), job.name, job.grade_label, job.onDuty and "On Duty" or "Off Duty"))
+    print(("%s, your job3 is: ^5%s^0 - ^5%s^0 - ^5%s^0"):format(xPlayer.getName(), job3.name, job3.grade_label, job3.onDuty and "On Duty" or "Off Duty"))
 end, false)
 
 ESX.RegisterCommand("info", { "user", "admin" }, function(xPlayer)
@@ -669,6 +683,12 @@ ESX.RegisterCommand(
     "admin",
     function(xPlayer, args)
         local targetCoords = args.playerId.getCoords()
+        local srcDim = GetPlayerRoutingBucket(xPlayer.source)
+        local targetDim = GetPlayerRoutingBucket(args.playerId.source)
+
+        if srcDim ~= targetDim then
+            SetPlayerRoutingBucket(xPlayer.source, targetDim)
+        end
         xPlayer.setCoords(targetCoords)
         if Config.AdminLogging then
             ESX.DiscordLogFields("UserActions", "Admin Teleport /goto Triggered!", "pink", {
@@ -695,6 +715,12 @@ ESX.RegisterCommand(
     function(xPlayer, args)
         local targetCoords = args.playerId.getCoords()
         local playerCoords = xPlayer.getCoords()
+        local targetDim = GetPlayerRoutingBucket(args.playerId.source)
+        local srcDim = GetPlayerRoutingBucket(xPlayer.source)
+
+        if targetDim ~= srcDim then
+            SetPlayerRoutingBucket(args.playerId.source, srcDim)
+        end
         args.playerId.setCoords(playerCoords)
         if Config.AdminLogging then
             ESX.DiscordLogFields("UserActions", "Admin Teleport /bring Triggered!", "pink", {
@@ -802,3 +828,28 @@ ESX.RegisterCommand("players", "admin", function()
         print(("^1[^2ID: ^5%s^0 | ^2Name : ^5%s^0 | ^2Group : ^5%s^0 | ^2Identifier : ^5%s^1]^0\n"):format(xPlayer.source, xPlayer.getName(), xPlayer.getGroup(), xPlayer.identifier))
     end
 end, true)
+
+ESX.RegisterCommand(
+    {"setdim", "setbucket"},
+    "admin",
+    function(xPlayer, args)
+        SetPlayerRoutingBucket(args.playerId.source, args.dimension)
+        if Config.AdminLogging then
+            ESX.DiscordLogFields("UserActions", "Admin Set Dim /setdim Triggered!", "pink", {
+                { name = "Player", value = xPlayer and xPlayer.name or "Server Console", inline = true },
+                { name = "ID", value = xPlayer and xPlayer.source or "Unknown ID", inline = true },
+                { name = "Target", value = args.playerId.name, inline = true },
+                { name = "Dimension", value = args.dimension, inline = true },
+            })
+        end
+    end,
+    true,
+    {
+        help = TranslateCap("command_setdim"),
+        validate = true,
+        arguments = {
+            { name = "playerId", help = TranslateCap("commandgeneric_playerid"), type = "player" },
+            { name = "dimension", help = TranslateCap("commandgeneric_dimension"), type = "number" },
+        },
+    }
+)

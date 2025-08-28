@@ -4,7 +4,7 @@ Server._index = Server
 Server.oneSync = GetConvar("onesync", "off")
 Server.slots = Config.Slots or 4
 Server.prefix = Config.Prefix or "char"
-Server.identifierType = ESX.GetConfig().Identifier or GetConvar("sv_lan", "") == "true" and "ip" or "license"
+Server.identifierType = ESX.GetConfig("Identifier") or GetConvar("sv_lan", "") == "true" and "ip" or "license"
 
 AddEventHandler("playerConnecting", function(_, _, deferrals)
    local source = source
@@ -23,7 +23,7 @@ end)
 
 AddEventHandler("esx_identity:completedRegistration", function(source, data)
     Multicharacter:RegistrationComplete(source, data)
-	Wait(5000)
+    Wait(5000)
 	exports['um-idcard']:CreateMetaLicense(source, 'id_card')
 end)
 
